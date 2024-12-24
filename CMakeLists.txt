@@ -17,9 +17,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # vcpkg dependencies
-find_package(fmt CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
-find_package(glfw3 CONFIG REQUIRED)
+find_package(fmt REQUIRED)
+find_package(imgui REQUIRED)
+find_package(glfw3 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 # vendored dependencies

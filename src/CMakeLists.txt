@@ -6,10 +6,6 @@ add_executable(${PROJECT_NAME} main.cpp)
 # must quote list variables to retain the list
 target_compile_options(${PROJECT_NAME} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:${cxxflags}>")
 
-target_include_directories(${PROJECT_NAME} PUBLIC
-  ${VENDOR}/duckdb/include
-)
-
 target_link_libraries(${PROJECT_NAME} PRIVATE
   fmt::fmt
   imgui::imgui
