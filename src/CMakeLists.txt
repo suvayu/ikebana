@@ -13,3 +13,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   OpenGL::GL
   duckdb
 )
+
+# dummy for testing
+add_executable(ddtest ddtest.cpp)
+target_link_libraries(ddtest PRIVATE fmt::fmt duckdb)
