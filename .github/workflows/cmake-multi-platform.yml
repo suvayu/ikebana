@@ -68,6 +68,7 @@ jobs:
       run: cd third_party/duckdb && python scripts/windows_ci.py
 
     - name: Setup ccache
+      if: matrix.os != 'windows-latest'
       uses: hendrikmuhs/ccache-action@v1.2
       with:
         create-symlink: true
