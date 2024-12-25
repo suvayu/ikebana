@@ -52,6 +52,10 @@ jobs:
       with:
         submodules: true
 
+    - uses: ConorMacBride/install-package@v1
+      with:
+        apt: libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules
+
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
