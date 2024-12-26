@@ -33,4 +33,8 @@ private:
   bool in_memory{false};
 };
 
+void setup_db(duckdb_connection &con);
+void query_db(duckdb_connection &con);
+void arrow_query_db(duckdb_connection &con);
+
 #endif // _quack_h_
