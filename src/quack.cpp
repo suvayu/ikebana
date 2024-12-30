@@ -61,25 +61,25 @@ void arrow_query_db(duckdb_connection &con) {
   duckdb_arrow arrow_result;
   duckdb_arrow_array arrow_array;
 
-  fmt::print("query:\n");
+  fmt::println("query:");
   DUCKDB_STATE_OK(duckdb_query_arrow(con, "SELECT * FROM test;", &arrow_result),
                   "failed: SELECT FROM {?}", "test");
   DUCKDB_STATE_OK(duckdb_query_arrow_array(arrow_result, &arrow_array),
                   "failed: to get *ArrowArray from {?}", "test");
 
-  fmt::print("ncols: {}\n", duckdb_arrow_column_count(arrow_result));
-  fmt::print("nrows: {}\n", duckdb_arrow_row_count(arrow_result));
-  fmt::print("done!\n");
+  fmt::println("ncols: {}", duckdb_arrow_column_count(arrow_result));
+  fmt::println("nrows: {}", duckdb_arrow_row_count(arrow_result));
+  fmt::println("done!");
 
   // auto len = arrow_array->internal_ptr;
   auto *array = reinterpret_cast<ArrowArray *>(arrow_array);
-  fmt::print("Array info: len={len}, nulls={nulls}, buffers={nbufs}, "
-             "children={nchilds}\n",
-             fmt::arg("len", array->length),
-             fmt::arg("nulls", array->null_count),
-             fmt::arg("nbufs", array->n_buffers),
-             fmt::arg("nchilds", array->n_children));
-  // fmt::print("Array info: len={len}", fmt::arg("len", array->length));
+  fmt::println("Array info: len={len}, nulls={nulls}, buffers={nbufs}, "
+               "children={nchilds}",
+               fmt::arg("len", array->length),
+               fmt::arg("nulls", array->null_count),
+               fmt::arg("nbufs", array->n_buffers),
+               fmt::arg("nchilds", array->n_children));
+  // fmt::println("Array info: len={len}", fmt::arg("len", array->length));
   duckdb_destroy_arrow(&arrow_result);
-  fmt::print("destroyed!\n");
+  fmt::println("destroyed!");
 }
