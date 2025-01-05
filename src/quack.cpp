@@ -1,7 +1,10 @@
+#include <cstddef>
+#include <fmt/format.h>
 #include <string>
 #include <vector>
 
 #include <fmt/core.h>
+#include <fmt/ranges.h>
 
 #include <duckdb.h>
 #include <duckdb/common/arrow/arrow.hpp>
@@ -14,11 +17,22 @@ void setup_db(duckdb_connection &con) {
       duckdb_query(con, "CREATE TABLE test (id INTEGER, name VARCHAR);", NULL),
       "failed: to CREATE TABLE {?}", "test");
 
-  DUCKDB_STATE_OK(
-      duckdb_query(
-          con, "INSERT INTO test VALUES (1, 'Suv'), (2, null), (3, 'NotSuv');",
-          NULL),
-      "failed: to INSERT INTO {?} VALUES", "test");
+  std::vector<std::string> data = {"Suv", "", "NotSuv", "Foo", "bar", "BAZ"};
+  std::vector<std::string> values(data.size());
+  for (size_t i = 0; i < data.size(); ++i) {
+    if (data[i].size() > 0) {
+      values[i] = fmt::format("({}, '{}')", i, data[i]);
+    } else {
+      values[i] = fmt::format("({}, null)", i);
+    }
+  }
+
+  DUCKDB_STATE_OK(duckdb_query(con,
+                               fmt::format("INSERT INTO test VALUES {};",
+                                           fmt::join(values, ","))
+                                   .data(),
+                               NULL),
+                  "failed: to INSERT INTO {?} VALUES", "test");
 }
 
 std::vector<std::vector<std::string>> query_db(duckdb_connection &con) {
